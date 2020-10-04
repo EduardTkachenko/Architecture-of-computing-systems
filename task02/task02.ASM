@@ -115,7 +115,6 @@ endInputVector:
 ;--------------------------------------------------------------------------
 vectorMultiples:
         xor ecx, ecx            ; ecx = 0
-        mov [tmpStack], esp
         mov ebx, vecA           ; ebx = &vecA
         mov edi, vecB
 multiplesVecLoop:
@@ -152,7 +151,6 @@ nextIteration:
         jmp multiplesVecLoop
 
 endMultiplesVector:
-        mov edi, [tmpStack]
         ret
 ;--------------------------------------------------------------------------
 VectorOutA:
