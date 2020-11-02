@@ -10,11 +10,11 @@ include 'win32a.inc'
 ;--------------------------------------------------------------------------
 section '.data' data readable writable
 
-        strMaxNmb    db 'Maximum parametr: %d', 10, 0  ; Строка для вывода ответа
+        strMaxNmb    db 'The maximum parameter of the factorial function, at which the function value does not exceed 10^9: %d', 10, 0  ; Строка для вывода ответа.
 
-        nmb          dd 1 ;Счетчик
-        maxNumber    dd 1000000000
-        i            dd ?
+        nmb          dd 1 ;Счетчик для поиска максимального параметра(резульата работы программы).
+        maxNumber    dd 1000000000 ;Максимальное число для числа Фибоначчи.
+        i            dd ? ;Счётчик для поиска числа Фибоначчи с заданным номером.
 ;--------------------------------------------------------------------------
 section '.code' code readable executable
 start:
@@ -29,10 +29,10 @@ finish:
         push 0
         call [ExitProcess]
 ;--------------------------------------------------------------------------
-getMaxNmb:
+getMaxNmb: ;Подпрограмма, после выполнения которой в регистре eax хранится максимальный параметр функции факториала, при котором значение функции не превышает = 10^9.
         mov [nmb], 1
         xor eax, eax
-loopGetMaxNmb:
+loopGetMaxNmb: ;Цикл, проверяюющий что не достигнут параметр, при котором число Фибоначчи больше 10^9.
         cmp eax, [maxNumber]
         jg endLoopGetMaxNmb
         add [nmb], 1
@@ -45,7 +45,7 @@ endLoopGetMaxNmb:
         ret
 
 ;--------------------------------------------------------------------------
-fibonacci:
+fibonacci: ;Принимает на вход в регистре eax номер числа Фибоначчи, которое подпрограмма вычисляет и сохраняет в регистр eax.
         mov ebx, 0
         mov ecx, 1
         mov [i], 2
@@ -61,8 +61,8 @@ loopFibonacciNumber:
 endFibonacci:
         mov eax, ecx
         ret
-;-------------------------------third act - including HeapApi--------------------------
-                                                 
+;--------------------------------------------------------------------------
+
 section '.idata' import data readable
     library kernel, 'kernel32.dll',\
             msvcrt, 'msvcrt.dll',\
